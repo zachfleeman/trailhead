@@ -7,7 +7,7 @@ import json
 router = APIRouter()
 
 @router.get("/")
-def get_logs(from_s: str, to_s: str) -> Any:
+def get_records(from_s: str, to_s: str) -> Any:
     from_date = parse_human_readable_time(from_s)
     to_date = parse_human_readable_time(to_s)
     resp = CloudTrailAPIRecordSource().load_from_api(from_date, to_date)
