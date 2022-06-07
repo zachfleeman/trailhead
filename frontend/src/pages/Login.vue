@@ -31,22 +31,9 @@ export default {
         }
     },
     computed: {
-        logoColor() {
-            if (this.$appState.darkTheme) return 'white';
-            return 'dark';
-        }
     }
 }
 </script>
 
 <style scoped>
-.pi-eye {
-    transform:scale(1.6);
-    margin-right: 1rem;
-}
-
-.pi-eye-slash {
-    transform:scale(1.6);
-    margin-right: 1rem;
-}
 </style>

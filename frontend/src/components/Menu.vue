@@ -4,7 +4,7 @@
 			<li v-if="visible(item) && !item.separator" :key="item.label || i" :class="[{'layout-menuitem-category': root, 'active-menuitem': activeIndex === i && !item.to && !item.disabled}]" role="none">
 				<template v-if="root">
 					<div class="layout-menuitem-root-text" :aria-label="item.label">{{item.label}}</div>
-					<appsubmenu :items="visible(item) && item.items" @menuitem-click="$emit('menuitem-click', $event)"></appsubmenu>
+					<Menu :items="visible(item) && item.items" @menuitem-click="$emit('menuitem-click', $event)"></Menu>
 				</template>
 				<template v-else>
 					<router-link v-if="item.to" :to="item.to" :class="[item.class, 'p-ripple', {'p-disabled': item.disabled}]" :style="item.style" @click="onMenuItemClick($event,item,i)" :target="item.target" :aria-label="item.label" exact role="menuitem" v-ripple>
@@ -20,7 +20,7 @@
 						<Badge v-if="item.badge" :value="item.badge"></Badge>
 					</a>
 					<transition name="layout-submenu-wrapper">
-						<appsubmenu v-show="activeIndex === i" :items="visible(item) && item.items" @menuitem-click="$emit('menuitem-click', $event)"></appsubmenu>
+						<Menu v-show="activeIndex === i" :items="visible(item) && item.items" @menuitem-click="$emit('menuitem-click', $event)"></Menu>
 					</transition>
 				</template>
 			</li>
@@ -30,7 +30,7 @@
 </template>
 <script>
 export default {
-	name: 'appsubmenu',
+	name: 'Menu',
 	props: {
 		items: Array,
 		root: {

@@ -5,9 +5,9 @@ import 'prismjs/themes/prism-coy.css';
 import './assets/styles/layout.scss';
 import './assets/demo/flags/flags.css';
 
-import { createApp, reactive } from 'vue';
+import { createApp } from 'vue';
 import router from './router';
-import AppWrapper from './AppWrapper.vue';
+import Guard from './Guard.vue';
 import PrimeVue from 'primevue/config';
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
@@ -93,20 +93,27 @@ import Tree from 'primevue/tree';
 import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
+import { createPinia } from 'pinia' 
 
-router.beforeEach(function(to, from, next) {
-    window.scrollTo(0, 0);
-    next();
-});
+import { useStore } from './store';
 
-const app = createApp(AppWrapper);
-
-app.config.globalProperties.$appState = reactive({ theme: 'lara-light-indigo', darkTheme: false });
+router.beforeEach((to, from, next) => {
+    const store = useStore()
+    console.log(store.isLoggedIn)
+    if (to.path !== '/login' && !store.isLoggedIn) {
+        next('/login')
+    } else {
+        next()
+    }
+  })
+  
+const app = createApp(Guard);
 
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(router);
+app.use(createPinia())
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);

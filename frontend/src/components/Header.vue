@@ -25,21 +25,16 @@
 
 <script>
 export default {
+	name: "Header",
     methods: {
         onMenuToggle(event) {
             this.$emit('menu-toggle', event);
         },
 		onTopbarMenuToggle(event) {
             this.$emit('topbar-menu-toggle', event);
-        },
-		topbarImage() {
-			return this.$appState.darkTheme ? 'images/logo-white.svg' : 'images/logo-dark.svg';
-		}
+        }
     },
 	computed: {
-		darkTheme() {
-			return this.$appState.darkTheme;
-		}
 	}
 }
 </script>

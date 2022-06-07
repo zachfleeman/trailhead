@@ -1,11 +1,11 @@
 <template>
 	<div class="layout-menu-container">
-		<AppSubmenu :items="model" class="layout-menu" :root="true" @menuitem-click="onMenuItemClick" @keydown="onKeyDown" />
+		<Menu :items="model" class="layout-menu" :root="true" @menuitem-click="onMenuItemClick" @keydown="onKeyDown" />
 	</div>
 </template>
 
 <script>
-import AppSubmenu from './AppSubmenu';
+import Menu from './Menu.vue';
 
 export default {
 	props: {
@@ -21,18 +21,12 @@ export default {
 				nodeElement.click();
 				event.preventDefault();
 			}
-		},
-		bannerImage() {
-			return this.$appState.darkTheme ? 'images/banner-primeblocks-dark.png' : 'images/banner-primeblocks.png';
 		}
     },
 	computed: {
-		darkTheme() {
-			return this.$appState.darkTheme;
-		}
 	},
 	components: {
-		'AppSubmenu': AppSubmenu
+		'Menu': Menu
 	}
 }
 </script>
