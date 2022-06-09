@@ -14,7 +14,10 @@
                 
                         <label for="secretKey" class="block text-900 font-medium text-xl mb-2">Secret Key</label>
                         <InputText id="secretKey" v-model="secretKey" type="text" class="w-full mb-3" placeholder="Secret Key" style="padding:1rem;" />
-                        <Button label="Submit" class="w-full p-3 text-xl"></button>
+
+                        <label for="region" class="block text-900 font-medium text-xl mb-2">Region</label>
+                        <Dropdown v-model="region" :options="regions" optionLabel="name" placeholder="Select a Region" class="w-full mb-3"/>
+                        <Button label="Submit" class="w-full p-3 text-xl" @click="submit()"></button>
                     </div>
                 </div>
             </div>
@@ -23,14 +26,24 @@
 </template>
 
 <script>
+import { useStore } from '@/store'
+
 export default {
     data() {
         return {
             accessKey: '',
-            secretKey: ''
+            secretKey: '',
+            region: '',
+            regions: [
+                {name: 'us-east-1'}
+            ]
         }
     },
-    computed: {
+    methods: {
+        submit() {
+            const store = useStore()
+            store.login(this.accessKey, this.secretKey, this.region.name)
+        }
     }
 }
 </script>

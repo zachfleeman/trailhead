@@ -14,27 +14,43 @@
 		</button>
 		<ul class="layout-topbar-menu hidden lg:flex origin-top">
 			<li>
-				<button class="p-link layout-topbar-button">
+				<button class="p-link layout-topbar-button" @click="onProfileToggle">
 					<i class="pi pi-user"></i>
 					<span>Profile</span>
 				</button>
+				<Menu ref="menu" :model="profile_items" :popup="true" />
 			</li>
 		</ul>
+
 	</div>
 </template>
 
 <script>
+import { useStore } from '@/store'
+
 export default {
 	name: "Header",
     methods: {
         onMenuToggle(event) {
             this.$emit('menu-toggle', event);
         },
-		onTopbarMenuToggle(event) {
-            this.$emit('topbar-menu-toggle', event);
-        }
+		onProfileToggle(event) {
+            this.$refs.menu.toggle(event);
+        },
+		logout() {
+			const store = useStore()
+			store.logout()
+		}
     },
-	computed: {
+	data() {
+		return {
+			profile_items: [
+				{
+					label: 'Account',
+					items: [ {label: 'Sign Out', icon: 'pi pi-fw pi-power-off', command: () => {this.logout()}} ]
+				}
+			]
+		}
 	}
 }
 </script>

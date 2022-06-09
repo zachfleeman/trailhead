@@ -93,13 +93,15 @@ import Tree from 'primevue/tree';
 import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
-import { createPinia } from 'pinia' 
-
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { useStore } from './store';
+
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate)
 
 router.beforeEach((to, from, next) => {
     const store = useStore()
-    console.log(store.isLoggedIn)
     if (to.path !== '/login' && !store.isLoggedIn) {
         next('/login')
     } else {
@@ -109,11 +111,12 @@ router.beforeEach((to, from, next) => {
   
 const app = createApp(Guard);
 
+
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(router);
-app.use(createPinia())
+app.use(pinia);
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);
