@@ -1,3 +1,4 @@
 trailscraper
 venv
 __pycache__
+*.pid
