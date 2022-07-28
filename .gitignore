@@ -2,3 +2,4 @@ trailscraper
 venv
 __pycache__
 *.pid
+.DS_Store

@@ -57,9 +57,12 @@
 	<div class="col-12 xl:col-12">
 		<div class="card">
 			<h5>Records</h5>
-			<DataTable :value="records" :rows="20" :paginator="true" responsiveLayout="scroll" v-model:expandedRows="expandedRows">
+			<DataTable :loading="loading" :value="records" :rows="20" :paginator="true" responsiveLayout="scroll" v-model:expandedRows="expandedRows">
 				<Column :expander="true" headerStyle="width: 3em" />
 				<Column v-for="col of columns" :field="col.field" :header="col.header" :key="col.field"/>
+				<template #loading>
+                        Loading CloudTrail Data...
+                    </template>
 				<template #expansion="slotProps">
 					<div>
 						<pre>
@@ -92,7 +95,8 @@ export default {
 			categories: {},
 			expandedRows: [],
 			start_date: null,
-			end_date: null
+			end_date: null,
+			loading: false
 		}
 	},
 	mounted() {
@@ -104,9 +108,11 @@ export default {
 	methods: {
 		async getRecords() {
 			try {
+				this.loading = true
 				const res = await api.getRecords(moment(this.start_date).format('MM-DD-YYYY h:mm:ss'), moment(this.end_date).format('MM-DD-YYYY h:mm:ss'))
 					if (res.status == 200) {
 					this.records = res.data.records;
+					this.loading = false
 					this.categories = this.calculateEventCategories(this.records)
 				}
 			}

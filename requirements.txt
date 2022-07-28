@@ -1,5 +1,8 @@
 fastapi
 pydantic
 uvicorn
+boto3==1.17.62
+click==8.0.1
+regex==2022.3.2
+dateparser==1.0.0
 trailscraper
-boto3
